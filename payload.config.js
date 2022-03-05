@@ -6,7 +6,7 @@ import Nextpayments from './collections/Nextpayments'
 import Referrals from './collections/Referrals'
 
 export default buildConfig({
-  serverURL: 'http://localhost:3000',
+  serverURL: "https://fex-edge.herokuapp.com",
   admin: {
     user: Users.slug,
   },
