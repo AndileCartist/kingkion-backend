@@ -1,30 +1,9 @@
-import payload from "payload";
-const afterChangeHook = async ({ doc, req, operation }) => {
-  if (operation === "create") {
-    const user = await payload.find({
-      collection: "nextpayments",
-      where: {
-        user: {
-          equals: doc.user.id,
-        },
-      },
-    });
-    const supplus = user.docs.slice(1);
-    supplus.forEach(async (sup) => {
-      await payload.delete({
-        collection: "nextpayments",
-        id: sup.id,
-      });
-    });
-  }
-  // console.log(doc)
-  // return doc;
-};
-const Nextpayments = {
-  slug: "nextpayments",
+
+const Paid = {
+  slug: "paid",
   admin: {
-    useAsTitle: "payments",
-    defaultColumns: ["user","date", "paid", "amount", "bank", "accountNumber", "accountType"],
+    useAsTitle: "paid",
+    defaultColumns: ["user","date", "amount", "bank", "accountNumber", "accountType"],
   },
   access: {
     read: () => true,
@@ -95,4 +74,4 @@ const Nextpayments = {
   timestamps: false,
 };
 
-export default Nextpayments;
+export default Paid;

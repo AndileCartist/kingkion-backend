@@ -1,4 +1,18 @@
 import payload from "payload";
+const getAmount = async ({ data, req, operation, originalDoc }) => {
+  const user = await payload.find({
+    collection: "referrals",
+    where: {
+      user: {
+        equals: data.user,
+      },
+    },
+  });
+  if (user.totalDocs !== 0) {
+    data.amount = user.docs[0].amount;
+  }
+  return data;
+};
 const afterChangeHook = async ({ doc, req, operation }) => {
   if (operation === "create") {
     const user = await payload.find({
@@ -16,6 +30,18 @@ const afterChangeHook = async ({ doc, req, operation }) => {
         id: sup.id,
       });
     });
+    const user2 = await payload.find({
+      collection: "referrals",
+      where: {
+        user: {
+          equals: doc.user.id,
+        },
+      },
+    });
+    await payload.delete({
+      collection: "referrals",
+      id: user2.docs[0].id,
+    });
   }
   // console.log(doc)
   // return doc;
@@ -28,9 +54,11 @@ const nextreferralpayments = {
   },
   access: {
     read: () => true,
+    create: () => true
   },
   hooks: {
     afterChange: [afterChangeHook],
+    beforeChange: [getAmount],
   },
   fields: [
     {

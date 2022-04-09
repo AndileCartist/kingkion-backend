@@ -4,9 +4,10 @@ import Personal from './collections/Personal';
 import Users from './collections/Users';
 import Nextpayments from './collections/Nextpayments'
 import Referrals from './collections/Referrals'
+import nextreferralpayments from './collections/nextreferralpayments'
 
 export default buildConfig({
-  serverURL: 'https://fex-edge.herokuapp.com',
+  serverURL: 'http://localhost:3000',
   admin: {
     user: Users.slug,
   },
@@ -15,7 +16,8 @@ export default buildConfig({
     Personal,
     Users,
     Nextpayments,
-    Referrals
+    Referrals,
+    nextreferralpayments
   ],
   csrf: [ // whitelist of domains to allow cookie auth from
     "*"

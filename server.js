@@ -19,8 +19,8 @@ payload.init({
       port: 587,
       secure: false, // use TLS
     },
-    fromName: "Wise Fex Edge",
-    fromAddress: "wisefex@gmail.com",
+    fromName: "King Koins",
+    fromAddress: "kingkoins@gmail.com",
   },
   express: app,
   onInit: () => {

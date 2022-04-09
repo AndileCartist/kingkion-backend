@@ -24,7 +24,7 @@ const Referrals = {
     slug: "referrals",
     admin: {
       useAsTitle: "referrals",
-      defaultColumns: ["referrals", "user","amount", "lastPercent"],
+      defaultColumns: ["user","referrals","amount", "lastPercent"],
     },
     access: {
       read: () => true,

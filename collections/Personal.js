@@ -38,7 +38,7 @@ const Personal = {
   slug: "personal",
   admin: {
     useAsTitle: "personal info",
-    defaultColumns: ["surname", "amount", "city", "gender"],
+    defaultColumns: ["user", "surname", "amount", "city", "gender"],
   },
   access: {
     read: () => true,

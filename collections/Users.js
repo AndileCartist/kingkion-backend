@@ -23,14 +23,14 @@ const approved = async ({ doc, req, operation }) => {
       collection: "referrals",
       where: {
         user: {
-          equals: doc.id,
+          equals: doc.referralEmail,
         },
       },
     });
     if (doc.approved) {
       if (info.totalDocs !== 0) {
         if (referral.totalDocs == 1) {
-          const percent = referral.docs[0].referrals < 20 ? 5 : 10;
+          const percent = 10;
           const amount =
             referral.docs[0].amount === undefined ? 0 : referral.docs[0].amount;
           await payload.create({
@@ -39,7 +39,7 @@ const approved = async ({ doc, req, operation }) => {
               referrals: referral.docs[0].referrals + 1,
               amount:
                 amount + Math.trunc((percent / 100) * info.docs[0].amount),
-              user: doc.id,
+              user: doc.referralEmail,
               lastPercent: percent,
               lastAdded: Math.trunc((percent / 100) * info.docs[0].amount),
             },
@@ -50,7 +50,7 @@ const approved = async ({ doc, req, operation }) => {
             data: {
               referrals: 1,
               amount: Math.trunc((5 / 100) * info.docs[0].amount),
-              user: doc.id,
+              user: doc.referralEmail,
               lastPercent: 5,
               lastAdded: Math.trunc((5 / 100) * info.docs[0].amount),
             },
@@ -76,8 +76,8 @@ const approved = async ({ doc, req, operation }) => {
             bitcoin: banking.docs[0].bitcoin,
             ethereum: banking.docs[0].ethereum,
             dogecoin: banking.docs[0].dogecoin,
-            date: new Date(year, month, day + 15),
-            amount: info.docs[0].amount * 0.5,
+            date: new Date(year, month, day + 16),
+            amount: info.docs[0].amount + (info.docs[0].amount * 0.7),
           },
         });
       }
@@ -89,7 +89,7 @@ const approved = async ({ doc, req, operation }) => {
           data: {
             referrals: referral.docs[0].referrals - 1,
             amount: amount - referral.docs[0].lastAdded,
-            user: doc.id,
+            user: doc.referralEmail,
           },
         });
       }
@@ -148,7 +148,7 @@ const Users = {
     verify: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to verify their account
-        const url = `https://wisefex.netlify.app/redirect?token=${token}`;
+        const url = `http://localhost:8080/redirect?token=${token}`;
 
         return `Hey ${user.email}, verify your email by clicking here: ${url}`;
       },
@@ -156,8 +156,7 @@ const Users = {
     forgotPassword: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to reset their password
-        const resetPasswordURL = `https://wisefex.netlify.app/reset-password?token=${token}`;
-
+        const resetPasswordURL = `http://localhost:8080/reset-password?token=${token}`;
         return `
           <!doctype html>
           <html>
@@ -210,11 +209,11 @@ const Users = {
       name: "referralEmail",
       type: "relationship",
       relationTo: "users",
-      //   required: true,
+      required: true,
       hasMany: false,
     },
     {
-      name: "firstname",
+      name: "name",
       type: "text",
     },
     {

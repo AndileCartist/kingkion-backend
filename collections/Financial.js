@@ -24,7 +24,7 @@ const Financial = {
   slug: "financial",
   admin: {
     useAsTitle: "financial info",
-    defaultColumns: ["bitcoin", "accountNumber", "bank", "accountOwner", "accountType"],
+    defaultColumns: ["user","bitcoin", "accountNumber", "bank", "accountOwner", "accountType"],
   },
   access: {
     read: () => true,
