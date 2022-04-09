@@ -46,8 +46,8 @@ const afterChangeHook = async ({ doc, req, operation }) => {
   // console.log(doc)
   // return doc;
 };
-const Nextreferralpayments = {
-  slug: "Nextreferralpayments",
+const Referralpayment = {
+  slug: "Referralpayment",
   admin: {
     useAsTitle: "payments",
     defaultColumns: ["user","date", "amount", "bank", "accountNumber", "accountType"],
@@ -123,4 +123,4 @@ const Nextreferralpayments = {
   timestamps: false,
 };
 
-export default Nextreferralpayments;
+export default Referralpayment;
