@@ -4,7 +4,7 @@ import Personal from "./collections/Personal";
 import Users from "./collections/Users";
 import Nextpayments from "./collections/Nextpayments";
 import Referrals from "./collections/Referrals";
-//import Nextreferralpayments from "./collections/Nextreferralpayments";
+import Referralpayment from "./collections/Referralpayment";
 import Paid from "./collections/Paid"
 
 export default buildConfig({
@@ -16,6 +16,7 @@ export default buildConfig({
     Financial,
     Personal,
     Users,
+    Referralpayment,
     Nextpayments,
     Referrals,
     Paid,
