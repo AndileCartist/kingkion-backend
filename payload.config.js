@@ -8,7 +8,7 @@ import Referralpayment from "./collections/Referralpayment";
 import Paid from "./collections/Paid"
 
 export default buildConfig({
-  serverURL: "http://localhost:3000",
+  serverURL: "https://king-koins.herokuapp.com",
   admin: {
     user: Users.slug,
   },
