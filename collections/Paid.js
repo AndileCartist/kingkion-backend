@@ -9,7 +9,7 @@ const Paid = {
     read: () => true,
   },
   hooks: {
-    afterChange: [afterChangeHook],
+   // afterChange: [afterChangeHook],
   },
   fields: [
     {
