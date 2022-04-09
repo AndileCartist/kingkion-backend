@@ -4,7 +4,7 @@ import Personal from "./collections/Personal";
 import Users from "./collections/Users";
 import Nextpayments from "./collections/Nextpayments";
 import Referrals from "./collections/Referrals";
-import Nextreferralpayments from "./collections/Nextreferralpayments";
+//import Nextreferralpayments from "./collections/Nextreferralpayments";
 import Paid from "./collections/Paid"
 
 export default buildConfig({
@@ -19,7 +19,7 @@ export default buildConfig({
     Nextpayments,
     Referrals,
     Paid,
-    Nextreferralpayments,
+   // Nextreferralpayments,
   ],
   csrf: [
     // whitelist of domains to allow cookie auth from
