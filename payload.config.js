@@ -4,7 +4,7 @@ import Personal from './collections/Personal';
 import Users from './collections/Users';
 import Nextpayments from './collections/Nextpayments'
 import Referrals from './collections/Referrals'
-import nextreferralpayments from './collections/nextreferralpayments'
+import Nextreferralpayments from './collections/Nextreferralpayments'
 
 export default buildConfig({
   serverURL: 'http://localhost:3000',
@@ -17,7 +17,7 @@ export default buildConfig({
     Users,
     Nextpayments,
     Referrals,
-    nextreferralpayments
+    Nextreferralpayments
   ],
   csrf: [ // whitelist of domains to allow cookie auth from
     "*"
