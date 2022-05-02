@@ -26,5 +26,5 @@ export default buildConfig({
     // whitelist of domains to allow cookie auth from
     "*",
   ],
-  cors: ["*"],
+  cors: ["https://kingkoins.site"],
 });
