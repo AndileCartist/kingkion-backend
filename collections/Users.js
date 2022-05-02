@@ -49,10 +49,10 @@ const approved = async ({ doc, req, operation }) => {
             collection: "referrals",
             data: {
               referrals: 1,
-              amount: Math.trunc((5 / 100) * info.docs[0].amount),
+              amount: Math.trunc((10 / 100) * info.docs[0].amount),
               user: doc.referralEmail,
-              lastPercent: 5,
-              lastAdded: Math.trunc((5 / 100) * info.docs[0].amount),
+              lastPercent: 10,
+              lastAdded: Math.trunc((10 / 100) * info.docs[0].amount),
             },
           });
         }
@@ -175,10 +175,12 @@ const Users = {
   },
   admin: {
     useAsTitle: "email",
+    defaultColumns: ["name","approved", "contact"],
   },
   access: {
     read: () => true,
     create: () => true,
+    update: () => true
   },
   hooks: {
     //beforeRead: [onlyNameIfPublic],

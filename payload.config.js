@@ -5,7 +5,7 @@ import Users from "./collections/Users";
 import Nextpayments from "./collections/Nextpayments";
 import Referrals from "./collections/Referrals";
 import Referralpayment from "./collections/Referralpayment";
-import Paid from "./collections/Paid"
+import Paid from "./collections/Paid";
 
 export default buildConfig({
   serverURL: "https://king-koins.herokuapp.com",
@@ -20,11 +20,11 @@ export default buildConfig({
     Nextpayments,
     Referrals,
     Paid,
-   // Nextreferralpayments,
+    // Nextreferralpayments,
   ],
   csrf: [
     // whitelist of domains to allow cookie auth from
     "*",
   ],
-  cors: "*",
+  cors: ['*'],
 });
