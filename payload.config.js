@@ -22,9 +22,6 @@ export default buildConfig({
     Paid,
     // Nextreferralpayments,
   ],
-  csrf: [
-    // whitelist of domains to allow cookie auth from
-    "*",
-  ],
-  cors: ["https://kingkoins.site", "http://localhost:8080"],
+  csrf: ["https://kingkoins.site", "http://localhost:8080"],
+  cors: '*',
 });

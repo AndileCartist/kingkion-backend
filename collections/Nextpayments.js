@@ -20,6 +20,39 @@ const afterChangeHook = async ({ doc, req, operation }) => {
   // console.log(doc)
   // return doc;
 };
+const paid = async ({ doc, req, operation }) => { 
+ // console.log(operation, doc.paid)
+  if(operation === "update" && doc.paid) {
+      const date = new Date();
+      const day = date.getDay();
+      const month = date.getMonth();
+      const year = date.getFullYear();
+      await payload.create({
+        collection: "paid",
+        id: doc.id,
+        data: {
+          user: doc.user,
+          name: doc.name,
+          contact: doc.contact,
+          accountType: doc.accountType,
+          accountNumber:doc.accountNumber,
+          accountOwner: doc.accountOwner,
+          bank: doc.bank,
+          bitcoin: doc.bitcoin,
+          ethereum: doc.ethereum,
+          dogecoin: doc.dogecoin,
+          date: new Date(),
+          amount: doc.amount,
+        },
+      });
+   
+      await payload.delete({
+        collection: "nextpayments",
+        id: doc.id,
+      });
+    
+  }
+}
 const Nextpayments = {
   slug: "nextpayments",
   admin: {
@@ -30,7 +63,7 @@ const Nextpayments = {
     read: () => true,
   },
   hooks: {
-    afterChange: [afterChangeHook],
+    afterChange: [afterChangeHook, paid],
   },
   fields: [
     {
