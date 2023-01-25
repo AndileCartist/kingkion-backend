@@ -207,13 +207,13 @@ const Users = {
       type: "text",
       required: true,
     },
-    {
-      name: "referralEmail",
-      type: "relationship",
-      relationTo: "users",
-      required: false,
-      hasMany: false,
-    },
+    // {
+    //   name: "referralEmail",
+    //   type: "relationship",
+    //   relationTo: "users",
+    //   required: false,
+    //   hasMany: false,
+    // },
     {
       name: "name",
       type: "text",
