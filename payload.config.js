@@ -8,7 +8,7 @@ import Referralpayment from "./collections/Referralpayment";
 import Paid from "./collections/Paid";
 
 export default buildConfig({
-  serverURL: "https://king-koins.herokuapp.com",
+  serverURL: "http://localhost:3000",
   admin: {
     user: Users.slug,
   },
@@ -22,6 +22,6 @@ export default buildConfig({
     Paid,
     // Nextreferralpayments,
   ],
-  csrf: ["https://kingkoins.site", "http://localhost:8080"],
-  cors: '*',
+  csrf: ["https://kingkoins.site", "http://localhost:8080", "http://localhost:8081"],
+  cors: "*",
 });

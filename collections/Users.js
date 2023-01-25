@@ -139,63 +139,7 @@ const checkApproved = async ({ data, req, operation, originalDoc }) => {
     return data;
   }
 };
-const paid = async ({ doc, req, operation }) => { 
-  if(operation === "update" && doc.paid) {
-    const banking = await payload.find({
-      collection: "financial",
-      where: {
-        user: {
-          equals: doc.id,
-        },
-      },
-    });
-    const info = await payload.find({
-      collection: "personal",
-      where: {
-        user: {
-          equals: doc.id,
-        },
-      },
-    });
 
-    if (info.totalDocs !== 0 && banking.totalDocs !== 0) {
-      const date = new Date();
-      const day = date.getDay();
-      const month = date.getMonth();
-      const year = date.getFullYear();
-      await payload.create({
-        collection: "paid",
-        id: doc.id,
-        data: {
-          user: doc.id,
-          name: doc.name,
-          contact: doc.contact,
-          accountType: banking.docs[0].accountType,
-          accountNumber: banking.docs[0].accountNumber,
-          accountOwner: banking.docs[0].accountOwner,
-          bank: banking.docs[0].bank,
-          bitcoin: banking.docs[0].bitcoin,
-          ethereum: banking.docs[0].ethereum,
-          dogecoin: banking.docs[0].dogecoin,
-          date: new Date(),
-          amount: info.docs[0].amount + (info.docs[0].amount * 0.7),
-        },
-      });
-      const nextpay = await payload.find({
-        collection: "nextpayments",
-        where: {
-          user: {
-            equals: doc.id,
-          },
-        },
-      });
-      await payload.delete({
-        collection: "nextpayments",
-        id: nextpay.docs[0].id,
-      });
-    }
-  }
-}
 const Users = {
   slug: "users",
   auth: {
@@ -204,7 +148,7 @@ const Users = {
     verify: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to verify their account
-        const url = `https://kingkoins.netlify.app/redirect?token=${token}`;
+        const url = `http://localhost:8081/redirect?token=${token}`;
 
         return `Hey ${user.email}, verify your email by clicking here: ${url}`;
       },
@@ -212,7 +156,7 @@ const Users = {
     forgotPassword: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to reset their password
-        const resetPasswordURL = `https://kingkoins.netlify.app/reset-password?token=${token}`;
+        const resetPasswordURL = `http://localhost:8081/reset-password?token=${token}`;
         return `
           <!doctype html>
           <html>
@@ -236,7 +180,7 @@ const Users = {
   access: {
     read: () => true,
     create: () => true,
-    update: () => true
+    update: () => true,
   },
   hooks: {
     //beforeRead: [onlyNameIfPublic],
