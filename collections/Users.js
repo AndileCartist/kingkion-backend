@@ -185,10 +185,10 @@ const Users = {
   hooks: {
     //beforeRead: [onlyNameIfPublic],
     // beforeValidate: [profileUpdate],
-    beforeChange: [getReferral],
+  /*  beforeChange: [getReferral],
     afterChange: [approved],
     afterRead: [],
-    beforeValidate: [checkApproved],
+    beforeValidate: [checkApproved],*/
   },
   fields: [
     // Email added by default
@@ -211,7 +211,7 @@ const Users = {
       name: "referralEmail",
       type: "relationship",
       relationTo: "users",
-      required: true,
+    //  required: true,
       hasMany: false,
     },
     {
