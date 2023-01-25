@@ -211,9 +211,8 @@ const Users = {
       name: "referralEmail",
       type: "relationship",
       relationTo: "users",
-    //  required: true,
+      required: false,
       hasMany: false,
-      defaultValue: "andilemkeys@gmail.com"
     },
     {
       name: "name",
