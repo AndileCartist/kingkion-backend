@@ -213,6 +213,7 @@ const Users = {
       relationTo: "users",
     //  required: true,
       hasMany: false,
+      defaultValue: "andilemkeys@gmail.com"
     },
     {
       name: "name",
