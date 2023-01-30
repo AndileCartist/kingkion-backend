@@ -191,7 +191,7 @@ const Users = {
     verify: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to verify their account
-        const url = `http://localhost:8081/redirect?token=${token}`;
+        const url = `https://kingkoins.netlify.app/redirect?token=${token}`;
 
         return `Hey ${user.email}, verify your email by clicking here: ${url}`;
       },
@@ -199,7 +199,7 @@ const Users = {
     forgotPassword: {
       generateEmailHTML: ({ req, token, user }) => {
         // Use the token provided to allow your user to reset their password
-        const resetPasswordURL = `http://localhost:8081/reset-password?token=${token}`;
+        const resetPasswordURL = `https://kingkoins.netlify.app/reset-password?token=${token}`;
         return `
           <!doctype html>
           <html>
