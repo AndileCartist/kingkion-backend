@@ -28,8 +28,10 @@ const approved = async ({ doc, req, operation }) => {
       },
     });
     if (doc.approved) {
+      console.log("entered approved");
       if (info.totalDocs !== 0) {
         if (referral.totalDocs == 1) {
+          console.log("entered first point");
           const percent = 10;
           const amount =
             referral.docs[0].amount === undefined ? 0 : referral.docs[0].amount;
@@ -58,32 +60,70 @@ const approved = async ({ doc, req, operation }) => {
         }
       }
       if (info.totalDocs !== 0 && banking.totalDocs !== 0) {
-        const date = new Date();
-        const day = date.getDay();
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        await payload.create({
-          collection: "nextpayments",
-          id: doc.id,
-          data: {
-            user: doc.id,
-            name: doc.name,
-            contact: doc.contact,
-            accountType: banking.docs[0].accountType,
-            accountNumber: banking.docs[0].accountNumber,
-            accountOwner: banking.docs[0].accountOwner,
-            bank: banking.docs[0].bank,
-            bitcoin: banking.docs[0].bitcoin,
-            ethereum: banking.docs[0].ethereum,
-            dogecoin: banking.docs[0].dogecoin,
-            date: new Date(year, month, day + 16),
-            amount: info.docs[0].amount + (info.docs[0].amount * 0.7),
-          },
-        });
+        const initialAmount = info.docs[0].amount;
+        const profit = initialAmount * 0.1;
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+
+        for (let i = 0; i < 12; i++) {
+          let newMonth = month + i;
+          if (newMonth > 11) {
+            newMonth = newMonth - 12;
+            year++;
+          }
+          console.log("next pay");
+          const amount = i === 11 ? initialAmount + profit : profit;
+          await payload.create({
+            collection: "nextpayments",
+            data: {
+              user: doc.id,
+              name: doc.name,
+              contact: doc.contact,
+              accountType: banking.docs[0].accountType,
+              accountNumber: banking.docs[0].accountNumber,
+              accountOwner: banking.docs[0].accountOwner,
+              bank: banking.docs[0].bank,
+              bitcoin: banking.docs[0].bitcoin,
+              ethereum: banking.docs[0].ethereum,
+              dogecoin: banking.docs[0].dogecoin,
+              date: new Date(year, newMonth, day),
+              amount: amount,
+            },
+          });
+        }
       }
+      // if (info.totalDocs !== 0 && banking.totalDocs !== 0) {
+      //   const date = new Date();
+      //   const day = date.getDay();
+      //   const month = date.getMonth();
+      //   const year = date.getFullYear();
+      //   await payload.create({
+      //     collection: "nextpayments",
+      //     id: doc.id,
+      //     data: {
+      //       user: doc.id,
+      //       name: doc.name,
+      //       contact: doc.contact,
+      //       accountType: banking.docs[0].accountType,
+      //       accountNumber: banking.docs[0].accountNumber,
+      //       accountOwner: banking.docs[0].accountOwner,
+      //       bank: banking.docs[0].bank,
+      //       bitcoin: banking.docs[0].bitcoin,
+      //       ethereum: banking.docs[0].ethereum,
+      //       dogecoin: banking.docs[0].dogecoin,
+      //       date: new Date(year, month, day + 16),
+      //       amount: info.docs[0].amount + (info.docs[0].amount * 0.7),
+      //     },
+      //   });
+      // }
     } else {
+      console.log("else execution");
+      console.log(doc);
       if (referral.totalDocs !== 0) {
-        const amount = referral.docs[0].amount === undefined ? 0 : referral.docs[0].amount;
+        const amount =
+          referral.docs[0].amount === undefined ? 0 : referral.docs[0].amount;
         await payload.create({
           collection: "referrals",
           data: {
@@ -95,15 +135,18 @@ const approved = async ({ doc, req, operation }) => {
       }
       const nextpay = await payload.find({
         collection: "nextpayments",
+        limit: 50,
         where: {
           user: {
             equals: doc.id,
           },
         },
       });
-      await payload.delete({
-        collection: "nextpayments",
-        id: nextpay.docs[0].id,
+      nextpay.docs.forEach(async (doc) => {
+        await payload.delete({
+          collection: "nextpayments",
+          id: doc.id,
+        });
       });
     }
   }
@@ -175,7 +218,7 @@ const Users = {
   },
   admin: {
     useAsTitle: "email",
-    defaultColumns: ["name","approved", "contact"],
+    defaultColumns: ["name", "approved", "contact"],
   },
   access: {
     read: () => true,
@@ -185,10 +228,10 @@ const Users = {
   hooks: {
     //beforeRead: [onlyNameIfPublic],
     // beforeValidate: [profileUpdate],
-  /*  beforeChange: [getReferral],
+    beforeChange: [getReferral],
     afterChange: [approved],
     afterRead: [],
-    beforeValidate: [checkApproved],*/
+    beforeValidate: [checkApproved],
   },
   fields: [
     // Email added by default
@@ -207,13 +250,13 @@ const Users = {
       type: "text",
       required: true,
     },
-    // {
-    //   name: "referralEmail",
-    //   type: "relationship",
-    //   relationTo: "users",
-    //   required: false,
-    //   hasMany: false,
-    // },
+    {
+      name: "referralEmail",
+      type: "relationship",
+      relationTo: "users",
+      required: false,
+      hasMany: false,
+    },
     {
       name: "name",
       type: "text",

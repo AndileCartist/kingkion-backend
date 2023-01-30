@@ -9,13 +9,13 @@ const afterChangeHook = async ({ doc, req, operation }) => {
         },
       },
     });
-    const supplus = user.docs.slice(1);
-    supplus.forEach(async (sup) => {
-      await payload.delete({
-        collection: "nextpayments",
-        id: sup.id,
-      });
-    });
+    // const supplus = user.docs.slice(1);
+    // supplus.forEach(async (sup) => {
+    //   await payload.delete({
+    //     collection: "nextpayments",
+    //     id: sup.id,
+    //   });
+    // });
   }
   // console.log(doc)
   // return doc;

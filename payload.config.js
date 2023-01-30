@@ -8,7 +8,7 @@ import Referralpayment from "./collections/Referralpayment";
 import Paid from "./collections/Paid";
 
 export default buildConfig({
-  serverURL: "https://king-koins.onrender.com",
+  serverURL: "http://king-koins.onrender.com",
   admin: {
     user: Users.slug,
   },
